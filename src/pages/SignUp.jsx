@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useFirebase } from '../context/FirebaseContext';
+import signupBg from '../assets/signupBg.jpg'
 
 function SignUp() {
   const firebase = useFirebase();
@@ -23,7 +24,7 @@ function SignUp() {
   };
 
   return (
-    <div className="flex justify-center bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-cover bg-center flex justify-center bg-gray-100" style={{ backgroundImage: `url(${signupBg})`}}>
       <div className="bg-white p-8 rounded-lg shadow-md w-96 mt-32 h-96">
         <h1 className="text-2xl font-bold text-center mb-6">Create an Account</h1>
         

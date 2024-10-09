@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import aboutBg from '../assets/aboutBg.jpg'
 
 function About() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center py-10">
+    <>
+    <div className="bg-cover bg-center flex flex-col items-center justify-center py-10" style={{ backgroundImage: `url(${aboutBg})` }}>
       <div className="max-w-4xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-6">About Us</h1>
         <p className="text-gray-700 text-lg mb-4">
@@ -48,6 +50,8 @@ function About() {
         </div>
       </div>
     </div>
+    </>
+    
   );
 }
 

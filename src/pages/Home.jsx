@@ -3,8 +3,12 @@ import Home1 from '../assets/Home1.png';
 import Image1 from '../assets/Image1.jpg';
 import Image2 from '../assets/Image2.jpg';
 import Image3 from '../assets/Image3.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="bg-orange-100 min-h-screen flex flex-col justify-between">
       {/* Hero Section */}
@@ -32,14 +36,14 @@ const Home = () => {
           <p className="mt-4 font-medium text-2xl text-orange-300 max-w-lg">
             Click on the button below to reserve your parking slot now.
           </p>
-          <button className="mt-6 bg-pink-700 text-white py-3 px-8 rounded-full shadow-lg hover:bg-pink-500 transition duration-200 transform hover:scale-105">
+          <button onClick={()=>navigate('/parking-lot')} className="mt-6 bg-pink-700 text-white py-3 px-8 rounded-full shadow-lg hover:bg-pink-500 transition duration-200 transform hover:scale-105">
             Reserve Slot
           </button>
         </div>
       </div>
 
       {/* Footer Section */}
-      <footer className="bg-white py-10">
+      <footer className="bg-slate-200 py-10">
         <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">Explore More</h2>
           <div className="flex space-x-6 mb-6">
@@ -65,7 +69,7 @@ const Home = () => {
               />
             </a>
           </div>
-          <p className="mt-6 text-gray-600">© 2023 ParkEasy. All rights reserved.</p>
+          <p className="mt-6 text-gray-600">© 2024 ParkEasy. All rights reserved.</p>
         </div>
       </footer>
     </div>
