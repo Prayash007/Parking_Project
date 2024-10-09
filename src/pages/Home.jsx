@@ -1,40 +1,73 @@
 import React from 'react';
 import Home1 from '../assets/Home1.png';
+import Image1 from '../assets/Image1.jpg';
+import Image2 from '../assets/Image2.jpg';
+import Image3 from '../assets/Image3.jpg';
 
 const Home = () => {
   return (
-    <div className='bg-orange-100 h-screen'>
-      <div className="relative h-96">
-        {/* Background Image with slight blur and gradient from the top */}
+    <div className="bg-orange-100 min-h-screen flex flex-col justify-between">
+      {/* Hero Section */}
+      <div className="relative h-[600px]">
+        {/* Background Image with overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${Home1})`,
+            backgroundImage: `url(${Home1})`, // Fix this line by using a template literal
             filter: 'blur(1px)',
             height: '100%',
-            zIndex: 1
+            zIndex: 1,
           }}
         />
-
-        {/* Overlay with gradient effect on the top of the image */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-transparent to-white"
-          style={{ height: '70%', zIndex: 2 }}
-        />
+        <div className="absolute inset-0 bg-black opacity-50" style={{ zIndex: 2 }}></div>
 
         {/* Text overlay on top of the image */}
         <div
-          className="relative flex flex-col items-center top-10 h-full z-3"
-          style={{ zIndex: 3 }} // Ensure this comes above the image and the gradient
+          className="relative flex flex-col items-center justify-center h-full z-3 text-center px-4"
+          style={{ zIndex: 3 }}
         >
-          <h1 className="text-3xl font-bold font-serif text-gray-900">
-            Reserve your Spot before others!
+          <h1 className="text-5xl font-extrabold font-serif text-white">
+            Reserve Your Spot Before Others!
           </h1>
-          <p className="mt-4 font-semibold text-xl text-orange-800">
-            Click on Reserve Slot to reserve your slot.
+          <p className="mt-4 font-medium text-2xl text-orange-300 max-w-lg">
+            Click on the button below to reserve your parking slot now.
           </p>
+          <button className="mt-6 bg-pink-700 text-white py-3 px-8 rounded-full shadow-lg hover:bg-pink-500 transition duration-200 transform hover:scale-105">
+            Reserve Slot
+          </button>
         </div>
       </div>
+
+      {/* Footer Section */}
+      <footer className="bg-white py-10">
+        <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">Explore More</h2>
+          <div className="flex space-x-6 mb-6">
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <img
+                src={Image1}
+                alt="Image 1"
+                className="w-32 h-32 object-cover rounded-lg shadow-lg hover:opacity-90 transition duration-300"
+              />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <img
+                src={Image2}
+                alt="Image 2"
+                className="w-32 h-32 object-cover rounded-lg shadow-lg hover:opacity-90 transition duration-300"
+              />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <img
+                src={Image3}
+                alt="Image 3"
+                className="w-32 h-32 object-cover rounded-lg shadow-lg hover:opacity-90 transition duration-300"
+              />
+            </a>
+          </div>
+          <p className="mt-6 text-gray-600">© 2023 ParkEasy. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };

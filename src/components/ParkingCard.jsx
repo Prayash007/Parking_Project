@@ -5,7 +5,7 @@ const ParkingCard = ({ id, name, price, rating, description, imageUrl }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/parking/${id}`);
+    navigate(`/manage-slots`);
   };
 
   return (

@@ -7,8 +7,9 @@ const ParkingLot = () => {
   const { parkingLots } = useParking();
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 mt-8">
-      {parkingLots.map((lot) => (
+    <div className="flex justify-center bg-gray-100 min-h-screen">
+      <div className="flex flex-wrap justify-center gap-4 mt-8 h-96">
+        {parkingLots.map((lot) => (
         <ParkingCard
           key={lot.id}
           id={lot.id}
@@ -19,6 +20,8 @@ const ParkingLot = () => {
           imageUrl={StarIcon} // Update this with the correct path
         />
       ))}
+      </div>
+      
     </div>
   );
 };
