@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-const database = getDatabase(firebaseApp);
+const db = getDatabase(firebaseApp);
 
 const FirebaseContext = createContext(null);
 
@@ -35,7 +35,7 @@ export const FirebaseProvider = (props) => {
 
   const putData = async (key, data) => {
     try {
-      return await set(ref(database, key), data);
+      return await set(ref(db, key), data);
     } catch (error) {
       console.error("Error writing data:", error);
       throw error; // Propagate the error if needed
@@ -43,7 +43,7 @@ export const FirebaseProvider = (props) => {
   };
 
   return (
-    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData }}>
+    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData ,db}}>
       {props.children}
     </FirebaseContext.Provider>
   );

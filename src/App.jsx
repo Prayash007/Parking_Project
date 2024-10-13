@@ -9,6 +9,7 @@ import Logo from './assets/Logo.png';
 import SignUp from './pages/SignUp';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import CurrentBookings from './pages/currentBookings';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { FirebaseProvider } from './context/FirebaseContext';
 
@@ -42,6 +43,7 @@ const App = () => {
                 <li className='hover:text-pink-700'><Link to="/">Home</Link></li>
                 <li className='hover:text-pink-700'><Link to="/SignUp">Sign Up</Link></li>
                 <li className='hover:text-pink-700'><Link to="/parking-lot">Parking Lot</Link></li>
+                <li className='hover:text-pink-700'><Link to="/Booking">Bookings</Link></li>
                 <li className='hover:text-pink-700'><Link to="/about">About Us</Link></li>
               </ul>
 
@@ -49,6 +51,7 @@ const App = () => {
               <ul className={`md:hidden absolute top-16 left-0 w-full bg-orange-100 p-6 flex flex-col items-center space-y-6 transition-all duration-300 ease-in-out ${isOpen ? 'block' : 'hidden'}`}>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/" onClick={toggleMenu}>Home</Link></li>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/SignUp" onClick={toggleMenu}>Sign Up</Link></li>
+                <li className='hover:text-pink-700'><Link to="/Booking" onClick={toggleMenu}>reservation</Link></li>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/parking-lot" onClick={toggleMenu}>Parking Lot</Link></li>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/about" onClick={toggleMenu}>About Us</Link></li>
               </ul>
@@ -59,6 +62,7 @@ const App = () => {
               <Route path="/manage-slots" element={<ManageSlots />} />
               <Route path="/parking-lot" element={<ParkingLot />} /> 
               <Route path="/SignUp" element={<SignUp />} />
+              <Route path="/Booking" element={<CurrentBookings />} />
               <Route path="/About" element={<About />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
