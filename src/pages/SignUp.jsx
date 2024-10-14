@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useFirebase } from "../context/FirebaseContext";
-import signupBg from "../assets/signupBg.jpg";
+import React, { useState } from 'react';
+import { useFirebase } from '../context/FirebaseContext';
+import signupBg from '../assets/signupBg.jpg'
 
 function SignUp() {
   const firebase = useFirebase();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleSignUp = async () => {
     try {
       await firebase.signUpWithEmailAndPassword(email, password);
-      setAlertMessage("Sign up successful!");
-      setEmail("");
-      setPassword("");
+      setAlertMessage("Sign up successful!"); 
+      setEmail(''); 
+      setPassword(''); 
 
       setTimeout(() => {
-        setAlertMessage("");
+        setAlertMessage('');
       }, 3000);
     } catch (error) {
       setAlertMessage("Error signing up: " + error.message); // Display error message
@@ -24,42 +24,33 @@ function SignUp() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center flex justify-center bg-gray-100"
-      style={{ backgroundImage: `url(${signupBg})` }}
-    >
+    <div className="min-h-screen bg-cover bg-center flex justify-center bg-gray-100" style={{ backgroundImage: `url(${signupBg})`}}>
       <div className="bg-white p-8 rounded-lg shadow-md w-96 mt-32 h-96">
-        <h1 className="text-2xl font-bold text-center mb-6">
-          Create an Account
-        </h1>
-
+        <h1 className="text-2xl font-bold text-center mb-6">Create an Account</h1>
+        
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            type="email"
+            type='email'
             value={email}
-            placeholder="Enter your email"
+            placeholder='Enter your email'
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
+            type='password'
             value={password}
-            placeholder="Enter your password"
+            placeholder='Enter your password'
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           />
         </div>
 
-        <button
+        <button 
           className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
           onClick={handleSignUp}
         >
@@ -67,11 +58,7 @@ function SignUp() {
         </button>
 
         {alertMessage && (
-          <div
-            className={`mt-4 text-center ${
-              alertMessage.includes("Error") ? "text-red-600" : "text-green-600"
-            }`}
-          >
+          <div className={`mt-4 text-center ${alertMessage.includes('Error') ? 'text-red-600' : 'text-green-600'}`}>
             {alertMessage}
           </div>
         )}
