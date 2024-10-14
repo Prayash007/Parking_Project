@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useParking } from '../context/ParkingContext';
-import parkingImage from '../assets/parkingImage.jpg'; // Ensure this path is correct
+import {parkingImage} from '../assets/parkingImage.jpg';
 
 const ManageSlots = () => {
   const { slots, toggleSlot } = useParking();
