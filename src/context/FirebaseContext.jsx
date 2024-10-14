@@ -1,8 +1,11 @@
+// src/context/FirebaseContext.js
+
 import React, { createContext } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getDatabase, set, ref } from 'firebase/database';
+import { getDatabase, set, ref, get } from 'firebase/database';
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyATKDKFolmVmO6dlsiZCbcNRZ2rI5a6CjM",
   authDomain: "fir-proj-6dda9.firebaseapp.com",
@@ -13,17 +16,25 @@ const firebaseConfig = {
   appId: "1:216368665414:web:736e251f8579b285b54b47"
 };
 
+// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getDatabase(firebaseApp);
 
 const FirebaseContext = createContext(null);
 
+// Custom hook to use Firebase context
 export const useFirebase = () => {
-  return React.useContext(FirebaseContext);
+  const context = React.useContext(FirebaseContext);
+  if (!context) {
+    throw new Error("useFirebase must be used within a FirebaseProvider");
+  }
+  return context;
 };
 
+// Firebase provider component
 export const FirebaseProvider = (props) => {
+  // Sign up with email and password
   const signUpWithEmailAndPassword = async (email, password) => {
     try {
       return await createUserWithEmailAndPassword(auth, email, password);
@@ -33,6 +44,7 @@ export const FirebaseProvider = (props) => {
     }
   };
 
+  // Function to write data to the database
   const putData = async (key, data) => {
     try {
       return await set(ref(db, key), data);
@@ -42,8 +54,19 @@ export const FirebaseProvider = (props) => {
     }
   };
 
+  // Function to read data from the database
+  const getData = async (path) => {
+    try {
+      const snapshot = await get(ref(db, path)); // Use get() with ref() to fetch data
+      return snapshot; // Return the snapshot for further processing
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error; // Re-throw the error for handling in the calling function
+    }
+  };
+
   return (
-    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData ,db}}>
+    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData, getData }}>
       {props.children}
     </FirebaseContext.Provider>
   );

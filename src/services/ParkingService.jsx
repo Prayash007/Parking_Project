@@ -1,6 +1,7 @@
 // src/services/parkingService.js
 import { ref, set, get } from 'firebase/database';
 import { useFirebase } from '../context/FirebaseContext';
+import { getData } from './FirebaseContext';
 
 export const BookSlot = async (slotId, userId) => {
     const db = useFirebase();
@@ -31,5 +32,15 @@ export const BookSlot = async (slotId, userId) => {
     } catch (error) {
         console.error("Error booking slot:", error);
         return false; // Handle error case
+    }
+};
+
+export const getUserBookedSlots = async (userId) => {
+    try {
+        const snapshot = await getData(`users/${userId}/bookedSlots`); // Adjust path as per your database structure
+        return snapshot.exists() ? snapshot.val() : [];
+    } catch (error) {
+        console.error("Error fetching user's booked slots:", error);
+        throw error; // Propagate error if needed
     }
 };

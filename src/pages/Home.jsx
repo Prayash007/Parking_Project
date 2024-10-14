@@ -20,10 +20,10 @@ const Home = () => {
             backgroundImage: `url(${Home1})`, // Fix this line by using a template literal
             filter: 'blur(1px)',
             height: '100%',
-            zIndex: 1,
+            zIndex: 0,
           }}
         />
-        <div className="absolute inset-0 bg-black opacity-50" style={{ zIndex: 2 }}></div>
+        <div className="absolute inset-0 bg-black opacity-50" style={{ zIndex: 0 }}></div>
 
         {/* Text overlay on top of the image */}
         <div

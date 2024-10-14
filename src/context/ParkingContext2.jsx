@@ -8,9 +8,9 @@ export const useParking = () => {
 
 export const Parking2Provider = ({ children }) => {
   const [parkingLots, setParkingLots] = useState([
-    { id: 1, name: 'Downtown Parking', price: 15, rating: 4.5, description: 'Secure downtown parking' },
-    { id: 2, name: 'Mall Parking', price: 10, rating: 4.2, description: 'Spacious mall parking' },
-    { id: 3, name: 'Downtown Parking', price: 15, rating: 4.5, description: 'Secure downtown parking' }
+    { id: 1, name: 'Magneto Mall Parking', price: 150, rating: 4.5, description: 'Secure parking' },
+    { id: 2, name: 'Ambuja Mall Parking', price: 100, rating: 4.2, description: 'Spacious parking' },
+    { id: 3, name: 'NIT Raipur Parking', price: 150, rating: 4.5, description: 'Secure parking' }
     // Add more parking lots as needed
   ]);
 

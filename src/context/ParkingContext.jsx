@@ -1,7 +1,6 @@
 // src/context/ParkingContext.js
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { ref, set, get } from 'firebase/database';
 import { useFirebase } from './FirebaseContext'; // Import your Firebase context
 
 const ParkingContext = createContext();
@@ -10,13 +9,13 @@ const ParkingContext = createContext();
 export const ParkingProvider = ({ children }) => {
     const [slots, setSlots] = useState([false, false, false, false, false, false]);
     const timeoutRefs = useRef([]); // Use ref to keep track of timeouts
-    const db  = useFirebase(); // Get the database instance
+    const firebase = useFirebase(); // Get the database instance
 
     // Fetch slots from Firebase on mount
     useEffect(() => {
         const fetchSlots = async () => {
             try {
-                const snapshot = await get(ref(db, 'parkingSlots'));
+                const snapshot = await firebase.getData('parkingSlots'); // Ensure firebase is not null
                 if (snapshot.exists()) {
                     setSlots(snapshot.val());
                 } else {
@@ -28,7 +27,12 @@ export const ParkingProvider = ({ children }) => {
         };
 
         fetchSlots();
-    }, [db]);
+
+        // Cleanup function to clear timeouts on unmount
+        return () => {
+            timeoutRefs.current.forEach(timeout => clearTimeout(timeout));
+        };
+    }, [firebase]); // Removed db from dependencies
 
     const toggleSlot = async (index) => {
         if (!slots[index]) { // Only allow booking if the slot is available
@@ -37,7 +41,7 @@ export const ParkingProvider = ({ children }) => {
             
             // Update Firebase
             try {
-                await set(ref(db, 'parkingSlots'), newSlots);
+                await firebase.putData('parkingSlots', newSlots); // Use putData for updating
                 setSlots(newSlots); // Update local state
 
                 // Clear any existing timeout for this slot
@@ -48,7 +52,7 @@ export const ParkingProvider = ({ children }) => {
                 // Reset the slot after 1 minute (60000 milliseconds)
                 timeoutRefs.current[index] = setTimeout(async () => {
                     newSlots[index] = false; // Mark as available
-                    await set(ref(db, 'parkingSlots'), newSlots); // Update Firebase again
+                    await firebase.putData('parkingSlots', newSlots);
                     setSlots(newSlots); // Update local state again
                 }, 60000);
             } catch (error) {

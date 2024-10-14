@@ -22,9 +22,9 @@ const App = () => {
 
   return (
     <div className='bg-orange-100 h-full'>
-      <ParkingProvider>
+      <FirebaseProvider>
+        <ParkingProvider>
         <Parking2Provider>
-          <FirebaseProvider>
           <Router>
             <nav className="bg-slate-200 p-4 text-slate flex justify-between items-center">
               <img src={Logo} className='h-10' alt="Logo" />
@@ -48,10 +48,10 @@ const App = () => {
               </ul>
 
               {/* Mobile menu (only visible when isOpen is true) */}
-              <ul className={`md:hidden absolute top-16 left-0 w-full bg-orange-100 p-6 flex flex-col items-center space-y-6 transition-all duration-300 ease-in-out ${isOpen ? 'block' : 'hidden'}`}>
+              <ul className={`md:hidden absolute z-20 top-16 left-0 w-full bg-orange-100 p-6 flex flex-col items-center space-y-6 transition-all duration-300  ease-in-out ${isOpen ? 'block' : 'hidden'}`}>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/" onClick={toggleMenu}>Home</Link></li>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/SignUp" onClick={toggleMenu}>Sign Up</Link></li>
-                <li className='hover:text-pink-700'><Link to="/Booking" onClick={toggleMenu}>reservation</Link></li>
+                <li className='hover:text-pink-700 text-2xl'><Link to="/Booking" onClick={toggleMenu}>reservation</Link></li>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/parking-lot" onClick={toggleMenu}>Parking Lot</Link></li>
                 <li className='hover:text-pink-700 text-2xl'><Link to="/about" onClick={toggleMenu}>About Us</Link></li>
               </ul>
@@ -67,9 +67,10 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </Router>
-          </FirebaseProvider>
+          
         </Parking2Provider>
       </ParkingProvider>
+      </FirebaseProvider>
     </div>
   );
 };

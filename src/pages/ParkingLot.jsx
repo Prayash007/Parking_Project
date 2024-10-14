@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParking } from '../context/ParkingContext2';
-import {useFirebase} from "../context/FirebaseContext";
 import ParkingCard from '../components/ParkingCard';
 import StarIcon from '../assets/StarIcon.jpg';
 import aboutBg from '../assets/aboutBg.jpg'

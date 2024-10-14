@@ -20,7 +20,7 @@ const ParkingCard = ({ id, name, price, rating, description, imageUrl }) => {
       </div>
       <div className="px-6 pt-4 pb-2 flex justify-between items-center">
         <div>
-          <span className="text-gray-900 font-bold text-lg">${price}/day</span>
+          <span className="text-gray-900 font-bold text-lg">₹{price}/3hrs</span>
         </div>
         <div className="flex items-center">
           <span className="text-yellow-500">⭐</span>
