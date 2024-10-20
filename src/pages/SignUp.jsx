@@ -1,7 +1,7 @@
 // components/SignUp.js
 import React, { useState, useEffect } from 'react';
 import { useFirebase } from '../context/FirebaseContext';
-import signupBg from '../assets/signupBg.jpg';
+import signupBg from '../assets/signupBg.png';
 import { getAuth } from 'firebase/auth';
 
 function SignUp() {

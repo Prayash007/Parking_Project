@@ -1,8 +1,8 @@
 import React from 'react';
 import Home1 from '../assets/Home1.png';
-import Image1 from '../assets/Image1.jpg';
-import Image2 from '../assets/Image2.jpg';
-import Image3 from '../assets/Image3.jpg';
+import Image1 from '../assets/Image1.png';
+import Image2 from '../assets/Image2.png';
+import Image3 from '../assets/Image3.png';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {

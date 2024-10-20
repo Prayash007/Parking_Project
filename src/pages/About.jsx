@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import aboutBg from '../assets/aboutBg.jpg'
+import aboutBg from '../assets/aboutBg.png'
 
 function About() {
   const navigate = useNavigate();
