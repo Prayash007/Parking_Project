@@ -43,18 +43,7 @@ export const ParkingProvider = ({ children }) => {
             try {
                 await firebase.putData('parkingSlots', newSlots); // Use putData for updating
                 setSlots(newSlots); // Update local state
-
-                // Clear any existing timeout for this slot
-                if (timeoutRefs.current[index]) {
-                    clearTimeout(timeoutRefs.current[index]);
-                }
-
-                // Reset the slot after 1 minute (60000 milliseconds)
-                timeoutRefs.current[index] = setTimeout(async () => {
-                    newSlots[index] = false; // Mark as available
-                    await firebase.putData('parkingSlots', newSlots);
-                    setSlots(newSlots); // Update local state again
-                }, 60000);
+                
             } catch (error) {
                 console.error("Error updating slot:", error);
             }

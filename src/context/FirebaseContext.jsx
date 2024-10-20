@@ -2,7 +2,7 @@
 
 import React, { createContext , useState, useEffect} from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { getDatabase, set, ref, get } from 'firebase/database';
 
 // Firebase configuration
@@ -45,16 +45,24 @@ export const FirebaseProvider = (props) => {
   };
 
   //Sign IN
-  const signIn = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            // User signed in
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
+  const signIn = async (email, password) => {
+    try {
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch(error) {
+      console.error("error signing in:", error);
+      throw error;
+    }   
+  };
+
+  // Log out user
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error logging out:", error);
+      throw error;
+    }
+  };
 
   // Function to write data to the database
   const putData = async (key, data) => {
@@ -79,16 +87,16 @@ export const FirebaseProvider = (props) => {
 
   const [userId, setUserId] = useState('guest');
 
-    useEffect(() => {
-        const unsubscribe = getAuth().onAuthStateChanged((user) => {
-            setUserId(user ? user.uid : 'guest');
-        });
+  useEffect(() => {
+    const unsubscribe = getAuth().onAuthStateChanged((user) => {
+      setUserId(user ? user.uid : 'guest');
+    });
 
-        return () => unsubscribe();
-      },[]);
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData, getData , signIn, userId}}>
+    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData, getData, signIn, logout, userId }}>
       {props.children}
     </FirebaseContext.Provider>
   );

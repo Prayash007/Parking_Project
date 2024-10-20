@@ -1,21 +1,20 @@
 // src/components/CurrentBookings.js
 
 import React, { useEffect, useState } from 'react';
-import { ref, onValue, getDatabase } from 'firebase/database';
+import { ref, onValue, getDatabase, update } from 'firebase/database';
 import { useFirebase } from '../context/FirebaseContext';
 
 const CurrentBookings = () => {
   const firebase = useFirebase();
-  const userId = firebase.userId; // Access userId from context
+  const { userId } = firebase; // Access userId from context
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Ensure userId is available before querying the database
     if (userId) {
-      const dbRef = ref(getDatabase(), `parkingSlots/`); // Removed space after `users/`
+      const dbRef = ref(getDatabase(), `parkingSlots/`);
 
       const unsubscribe = onValue(dbRef, (snapshot) => {
         setLoading(false);
@@ -32,12 +31,26 @@ const CurrentBookings = () => {
         setError(error.message); // Set error message on failure
       });
 
-      return () => unsubscribe(); // Cleanup subscription on unmount
+      return () => unsubscribe();
     } else {
-      setLoading(false); // If userId is not available, stop loading
+      setLoading(false); 
       setBookings([]); // No bookings if no userId
     }
-  }, [userId]); // Add userId as a dependency
+  }, [userId]);
+
+  // Function to cancel booking by setting the slot value to false
+  const cancelBooking = (slotId) => {
+    const db = getDatabase();
+    const slotRef = ref(db, `parkingSlots/${slotId}`); 
+    update(slotRef, { reserved: false })
+      .then(() => {
+        // Update UI to remove the canceled booking
+        setBookings((prevBookings) => prevBookings.filter((id) => id !== slotId));
+      })
+      .catch((error) => {
+        setError(`Failed to cancel booking for slot ${slotId}: ${error.message}`);
+      });
+  };
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -50,7 +63,15 @@ const CurrentBookings = () => {
         <ul className="mt-4 space-y-2">
           {bookings.map(slotId => (
             <li key={slotId} className="p-4 bg-gray-100 rounded-md shadow hover:bg-gray-200 transition duration-200">
-              Slot {slotId} is currently reserved.
+              <div className="flex justify-between items-center">
+                <span>Slot {slotId} is currently reserved.</span>
+                <button
+                  onClick={() => cancelBooking(slotId)}
+                  className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200"
+                >
+                  Cancel Booking
+                </button>
+              </div>
             </li>
           ))}
         </ul>
