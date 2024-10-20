@@ -2,31 +2,42 @@
 
 import React, { useEffect, useState } from 'react';
 import { ref, onValue, getDatabase } from 'firebase/database';
+import { useFirebase } from '../context/FirebaseContext';
 
 const CurrentBookings = () => {
+  const firebase = useFirebase();
+  const userId = firebase.userId; // Access userId from context
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const dbRef = ref(getDatabase(), 'parkingSlots/');
-    
-    const unsubscribe = onValue(dbRef, (snapshot) => {
-      setLoading(false);
-      if (snapshot.exists()) {
-        const slots = snapshot.val();
-        const reservedSlots = Object.keys(slots).filter(slotId => slots[slotId]===true);
-        setBookings(reservedSlots);
-      } else {
-        setBookings([]);
-      }
-    }, (error) => {
-      setLoading(false);
-      setError(error.message);
-    });
+    // Ensure userId is available before querying the database
+    if (userId) {
+      const dbRef = ref(getDatabase(), `parkingSlots/`); // Removed space after `users/`
 
-    return () => unsubscribe();
-  }, []);
+      const unsubscribe = onValue(dbRef, (snapshot) => {
+        setLoading(false);
+        if (snapshot.exists()) {
+          const slots = snapshot.val();
+          // Filter to get only reserved slots
+          const reservedSlots = Object.keys(slots).filter(slotId => slots[slotId] === true);
+          setBookings(reservedSlots);
+        } else {
+          setBookings([]); // No slots found
+        }
+      }, (error) => {
+        setLoading(false);
+        setError(error.message); // Set error message on failure
+      });
+
+      return () => unsubscribe(); // Cleanup subscription on unmount
+    } else {
+      setLoading(false); // If userId is not available, stop loading
+      setBookings([]); // No bookings if no userId
+    }
+  }, [userId]); // Add userId as a dependency
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">

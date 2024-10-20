@@ -13,9 +13,9 @@ export const ParkingProvider = ({ children }) => {
 
     // Fetch slots from Firebase on mount
     useEffect(() => {
-        const fetchSlots = async () => {
+        const fetchSlots = async (userId) => {
             try {
-                const snapshot = await firebase.getData('parkingSlots'); // Ensure firebase is not null
+                const snapshot = await firebase.getData(`users/ ${userId}/parkingSlots/`); // Ensure firebase is not null
                 if (snapshot.exists()) {
                     setSlots(snapshot.val());
                 } else {

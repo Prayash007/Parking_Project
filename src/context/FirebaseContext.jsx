@@ -1,8 +1,8 @@
 // src/context/FirebaseContext.js
 
-import React, { createContext } from 'react';
+import React, { createContext , useState, useEffect} from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, set, ref, get } from 'firebase/database';
 
 // Firebase configuration
@@ -44,6 +44,18 @@ export const FirebaseProvider = (props) => {
     }
   };
 
+  //Sign IN
+  const signIn = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            // User signed in
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
   // Function to write data to the database
   const putData = async (key, data) => {
     try {
@@ -65,8 +77,18 @@ export const FirebaseProvider = (props) => {
     }
   };
 
+  const [userId, setUserId] = useState('guest');
+
+    useEffect(() => {
+        const unsubscribe = getAuth().onAuthStateChanged((user) => {
+            setUserId(user ? user.uid : 'guest');
+        });
+
+        return () => unsubscribe();
+      },[]);
+
   return (
-    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData, getData }}>
+    <FirebaseContext.Provider value={{ signUpWithEmailAndPassword, putData, getData , signIn, userId}}>
       {props.children}
     </FirebaseContext.Provider>
   );
