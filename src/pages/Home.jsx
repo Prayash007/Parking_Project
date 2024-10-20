@@ -1,6 +1,6 @@
 import React from 'react';
-import Home1 from '../assets/home1.png';
-import Image1 from '../assets/image1.png';
+import Home1 from '../assets/Home1.png';
+import Image1 from '../assets/Image1.png';
 import Image2 from '../assets/image2.png';
 import Image3 from '../assets/image3.png';
 import { useNavigate } from 'react-router-dom';

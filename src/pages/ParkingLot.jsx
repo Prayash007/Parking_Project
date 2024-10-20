@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParking } from '../context/ParkingContext2';
 import ParkingCard from '../components/ParkingCard';
-import StarIcon from '../assets/starIcon.png';
+import StarIcon from '../assets/StarIcon.png';
 import aboutBg from '../assets/aboutBg.png'
 
 
