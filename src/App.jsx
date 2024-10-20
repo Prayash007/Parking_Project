@@ -5,7 +5,7 @@ import ManageSlots from './pages/ManageSlots';
 import ParkingLot from './pages/ParkingLot';
 import { ParkingProvider } from './context/ParkingContext';
 import { Parking2Provider } from './context/ParkingContext2';
-import Logo from './assets/Logo.png';
+import Logo from './assets/logo.png';
 import SignUp from './pages/SignUp';
 import About from './pages/About';
 import Contact from './pages/Contact';
